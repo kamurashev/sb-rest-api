@@ -3,9 +3,11 @@ package org.zapto.trywithfun.sbrestapi.rest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUser;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUserDVO;
+import org.zapto.trywithfun.sbrestapi.entity.validation.groups.Create;
 import org.zapto.trywithfun.sbrestapi.security.anotations.AdminAndOwner;
 import org.zapto.trywithfun.sbrestapi.security.anotations.AdminOnly;
 import org.zapto.trywithfun.sbrestapi.service.ApplicationUserService;
@@ -31,13 +33,14 @@ public class UserController {
 
     @AdminOnly
     @PostMapping
-    public ApplicationUser create(@RequestBody ApplicationUser user) {
+    public ApplicationUser create(@RequestBody @Validated({Create.class}) ApplicationUser user) {
         return applicationUserService.create(user);
     }
 
     @AdminAndOwner
     @PutMapping("{login}")
-    public ApplicationUser update(@PathVariable String login, @RequestBody ApplicationUser user) {
+    public ApplicationUser update(@PathVariable String login,
+                        @RequestBody @Validated ApplicationUser user) {
         return applicationUserService.update(login, user);
     }
 
