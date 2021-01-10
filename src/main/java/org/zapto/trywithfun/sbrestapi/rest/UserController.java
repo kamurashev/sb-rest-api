@@ -11,6 +11,8 @@ import org.zapto.trywithfun.sbrestapi.entity.validation.groups.Create;
 import org.zapto.trywithfun.sbrestapi.security.anotations.AdminAndOwner;
 import org.zapto.trywithfun.sbrestapi.security.anotations.AdminOnly;
 import org.zapto.trywithfun.sbrestapi.service.ApplicationUserService;
+import org.zapto.trywithfun.sbrestapi.swagger.annotations.ApiPageable;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("${v1API}/users")
@@ -21,7 +23,8 @@ public class UserController {
 
     @AdminOnly
     @GetMapping
-    public Iterable<ApplicationUserDVO> list(Pageable pageable) {
+    @ApiPageable
+    public Iterable<ApplicationUserDVO> list(@ApiIgnore Pageable pageable) {
         return applicationUserService.listView(pageable);
     }
 

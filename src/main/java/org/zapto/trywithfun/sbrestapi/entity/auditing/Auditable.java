@@ -1,6 +1,7 @@
 package org.zapto.trywithfun.sbrestapi.entity.auditing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -26,6 +27,7 @@ public class Auditable {
     @LastModifiedBy
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @ApiModelProperty(example = "some_username")
     private String lastModifiedBy;
 
     @CreatedDate
@@ -36,5 +38,6 @@ public class Auditable {
     @CreatedBy
     @Column(nullable = false, updatable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @ApiModelProperty(example = "some_admin_username")
     private String createdBy;
 }
