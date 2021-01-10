@@ -11,7 +11,7 @@ import org.zapto.trywithfun.sbrestapi.repository.ApplicationUserRepository;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUser;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor()
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final ApplicationUserRepository userRepository;

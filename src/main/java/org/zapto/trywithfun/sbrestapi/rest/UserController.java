@@ -1,7 +1,6 @@
 package org.zapto.trywithfun.sbrestapi.rest;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +13,11 @@ import org.zapto.trywithfun.sbrestapi.service.ApplicationUserService;
 import org.zapto.trywithfun.sbrestapi.swagger.annotations.ApiPageable;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("${v1API}/users")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor()
 public class UserController {
 
     private final ApplicationUserService applicationUserService;
@@ -24,7 +25,7 @@ public class UserController {
     @AdminOnly
     @GetMapping
     @ApiPageable
-    public Iterable<ApplicationUserDVO> list(@ApiIgnore Pageable pageable) {
+    public List<ApplicationUserDVO> list(@ApiIgnore Pageable pageable) {
         return applicationUserService.listView(pageable);
     }
 
@@ -36,13 +37,13 @@ public class UserController {
 
     @AdminOnly
     @PostMapping
-    public ApplicationUser create(@RequestBody @Validated({Create.class}) ApplicationUser user) {
+    public ApplicationUserDVO create(@RequestBody @Validated({Create.class}) ApplicationUser user) {
         return applicationUserService.create(user);
     }
 
     @AdminAndOwner
     @PutMapping("{login}")
-    public ApplicationUser update(@PathVariable String login,
+    public ApplicationUserDVO update(@PathVariable String login,
                         @RequestBody @Validated ApplicationUser user) {
         return applicationUserService.update(login, user);
     }

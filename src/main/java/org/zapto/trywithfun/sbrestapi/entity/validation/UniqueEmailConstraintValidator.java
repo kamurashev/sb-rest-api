@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.servlet.HandlerMapping;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUser;
+import org.zapto.trywithfun.sbrestapi.entity.ApplicationUserDVO;
 import org.zapto.trywithfun.sbrestapi.rest.exceptions.NotFoundException;
 import org.zapto.trywithfun.sbrestapi.service.ApplicationUserService;
 
@@ -30,7 +31,7 @@ public class UniqueEmailConstraintValidator implements ConstraintValidator<Uniqu
         String login = ((Map<String, String>) request
                 .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE))
                 .get("login");
-        ApplicationUser user;
+        ApplicationUserDVO user;
         try {
             user = userService.getByEmail(email);
         } catch (NotFoundException e) {

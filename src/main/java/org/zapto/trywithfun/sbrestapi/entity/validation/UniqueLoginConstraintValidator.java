@@ -14,7 +14,7 @@ public class UniqueLoginConstraintValidator implements ConstraintValidator<Uniqu
 
     public boolean isValid(String login, ConstraintValidatorContext context) {
         try {
-          userService.getByLogin(login);
+          userService.getByLoginView(login);
         } catch (NotFoundException e) {
             return true;
         }

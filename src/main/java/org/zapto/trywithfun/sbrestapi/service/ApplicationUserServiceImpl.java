@@ -11,9 +11,10 @@ import org.zapto.trywithfun.sbrestapi.repository.ApplicationUserRepository;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUser;
 import org.zapto.trywithfun.sbrestapi.rest.exceptions.NotFoundException;
 
+import java.util.List;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor()
 public class ApplicationUserServiceImpl implements ApplicationUserService {
 
     private final ApplicationUserRepository userRepository;
@@ -21,19 +22,13 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     private final ApplicationUserMapper userMapper;
 
     @Override
-    public Iterable<ApplicationUser> list(Pageable pageable) {
+    public List<ApplicationUser> list(Pageable pageable) {
         return userRepository.findAll(pageable).getContent();
     }
 
     @Override
-    public Iterable<ApplicationUserDVO> listView(Pageable pageable) {
+    public List<ApplicationUserDVO> listView(Pageable pageable) {
         return userRepository.findAllViewBy(pageable).getContent();
-    }
-
-    @Override
-    public ApplicationUser getByLogin(String login) {
-        return userRepository.findByLogin(login)
-                .orElseThrow(NotFoundException::new) ;
     }
 
     @Override
@@ -43,35 +38,40 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public ApplicationUser getById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+    public ApplicationUserDVO getById(Long id) {
+        return userMapper.toApplicationUserDVO(userRepository.findById(id)
+                .orElseThrow(NotFoundException::new));
     }
 
     @Override
-    public ApplicationUser getByEmail(String email) {
-       return userRepository.findByEmail(email)
-               .orElseThrow(NotFoundException::new);
+    public ApplicationUserDVO getByEmail(String email) {
+       return userMapper.toApplicationUserDVO(userRepository.findByEmail(email)
+               .orElseThrow(NotFoundException::new));
     }
 
     @Override
-    public ApplicationUser create(ApplicationUser user) {
+    public ApplicationUserDVO create(ApplicationUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return userMapper.toApplicationUserDVO(userRepository.save(user));
     }
 
     @Override
-    public ApplicationUser update(String login, ApplicationUser updatedUser) {
+    public ApplicationUserDVO update(String login, ApplicationUser updatedUser) {
         ApplicationUser target = getByLogin(login);
         if(updatedUser.getPassword() != null) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
         userMapper.updateApplicationUser(updatedUser, target);
-        return userRepository.save(target);
+        return userMapper.toApplicationUserDVO(userRepository.save(target));
     }
 
     @Override
     public void delete(String login) {
         userRepository.delete(getByLogin(login));
+    }
+
+    private ApplicationUser getByLogin(String login) {
+        return userRepository.findByLogin(login)
+                .orElseThrow(NotFoundException::new);
     }
 }
