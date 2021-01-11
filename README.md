@@ -1,13 +1,21 @@
-# sb-rest-api
-# SbringBoot REST example application
-# Works with MySQL DB Server version	5.7.32
+<h1>SbringBoot REST example application</h1>
+  <h3> &emsp; Represents simple users API</h3>
 
-# In order to set up DB and test data:
+<br>
 
-#1 Execute:
-# mysql -uroot -e "create database sbApp" -p
+<h2>Works with MySQL DB Server version	5.7.32</h2>
+  <h3> &emsp; In order to set up DB and test data:</h3>
+    <p> &emsp;&emsp; 1 Execute:</p>
+    <p> &emsp;&emsp; mysql -uroot -e "create database sbApp" -p</p>  
+    <p> &emsp;&emsp; 2 Execute:</p>
+    <p> &emsp;&emsp; mysql -u root sbApp < path_to_init.sql -p</p>
 
-#2 Execute
-# mysql -u root sbApp < path_to_init.sql -p
+<br>
 
-# Import project, build and enjoy ;)...
+<h2>Import project, build and enjoy ;)...</h2>
+
+  <h3> &emsp; API is documented by swagger, open <a href="http://localhost:8080/swagger-ui/">http://localhost:8080/swagger-ui/ </a></h3>
+    <p> &emsp;&emsp; change host and/or port in needed</p>
+  <h3> &emsp; Basic Authentication is used,</h3>
+    <p> &emsp;&emsp; -use admin:admin123 credentials for ROLE_ADMIN </p>
+    <p> &emsp;&emsp; -use user:user123 credentials for ROLE_USER </p>
