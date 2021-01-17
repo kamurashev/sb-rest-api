@@ -2,11 +2,13 @@ package org.zapto.trywithfun.sbrestapi.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Value;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Value
-public class ApplicationUserDVO {
+public class ApplicationUserDVO implements Serializable {
 
     @ApiModelProperty(example = "user")
     String login;
