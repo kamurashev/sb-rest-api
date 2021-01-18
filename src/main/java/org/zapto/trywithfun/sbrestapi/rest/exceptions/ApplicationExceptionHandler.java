@@ -65,4 +65,11 @@ public class ApplicationExceptionHandler {
     public Violation propertyReferenceException(PropertyReferenceException e) {
         return new Violation(e.getMessage());
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({NotFoundException.class})
+    public Violation notFoundException(NotFoundException e) {
+        return new Violation("Not Found");
+    }
 }

@@ -22,5 +22,7 @@ public interface ApplicationUserService {
 
     ApplicationUserDVO update(String login, ApplicationUser user);
 
+    boolean exists(String login);
+
     void delete(String login);
 }

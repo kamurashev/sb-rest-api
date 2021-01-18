@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUser;
@@ -43,6 +44,7 @@ public class UserController {
 
     @AdminOnly
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @CachePut(cacheNames = "users_cache")
     @Caching(put = {@CachePut(value = "users_cache")}, evict = {@CacheEvict(value = "users_list_cache", allEntries = true)})
     public ApplicationUserDVO create(@RequestBody @Validated({Create.class}) ApplicationUser user) {
@@ -52,7 +54,8 @@ public class UserController {
     @AdminAndOwner
     @PutMapping("{login}")
     @Caching(put = {@CachePut(value = "users_cache")}, evict = {@CacheEvict(value = "users_list_cache", allEntries = true)})
-    public ApplicationUserDVO update(@PathVariable String login, @RequestBody @Validated ApplicationUser user) {
+    public ApplicationUserDVO update(@PathVariable String login,
+                                     @RequestBody @Validated ApplicationUser user) {
         return applicationUserService.update(login, user);
     }
 

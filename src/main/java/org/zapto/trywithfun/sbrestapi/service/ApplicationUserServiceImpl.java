@@ -65,6 +65,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
+    public boolean exists(String login) {
+        return userRepository.existsByLogin(login);
+    }
+
+    @Override
     public void delete(String login) {
         userRepository.delete(getByLogin(login));
     }
