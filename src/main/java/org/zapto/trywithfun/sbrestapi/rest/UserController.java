@@ -2,6 +2,7 @@ package org.zapto.trywithfun.sbrestapi.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.zapto.trywithfun.sbrestapi.entity.ApplicationUser;
@@ -37,6 +38,7 @@ public class UserController {
 
     @AdminOnly
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ApplicationUserDVO create(@RequestBody @Validated({Create.class}) ApplicationUser user) {
         return applicationUserService.create(user);
     }
@@ -44,7 +46,7 @@ public class UserController {
     @AdminAndOwner
     @PutMapping("{login}")
     public ApplicationUserDVO update(@PathVariable String login,
-                        @RequestBody @Validated ApplicationUser user) {
+                                     @RequestBody @Validated ApplicationUser user) {
         return applicationUserService.update(login, user);
     }
 
